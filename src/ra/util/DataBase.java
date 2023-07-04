@@ -1,10 +1,12 @@
 package ra.util;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class DataBase {
+public class DataBase<T> {
     public static final String USER_PATH ="C:\\Users\\hung1\\OneDrive\\Desktop\\Project_MD3\\src\\ra\\util\\users.txt";
-    public static void writeToFile(Object o, String path){
+    public  void writeToFile(List<T> o, String path){
         FileOutputStream fos = null;
         ObjectOutputStream oos = null;
         try {
@@ -30,14 +32,16 @@ public class DataBase {
             }
         }
     }
-    public  static  Object readFromFile(String path){
+    public  List<T> readFromFile(String path){
         FileInputStream fis  = null;
         ObjectInputStream ois =null;
-        Object o = null;
+        List<T> o = new ArrayList<>();
         try {
-            fis= new FileInputStream(path);
+            fis = new FileInputStream(path);
             ois = new ObjectInputStream(fis);
-            o = ois.readObject();
+            o = (List<T>) ois.readObject();
+        }catch (EOFException xx){
+
         }catch (IOException e){
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

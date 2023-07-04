@@ -1,5 +1,5 @@
 package ra.model;
 
 public enum RoleName {
-    ADMIN,USER
+    ADMIN,USER, MANAGER
 }

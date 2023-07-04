@@ -9,9 +9,9 @@ import java.util.List;
 
 public class UserService implements IGenericService<User,Integer> {
     private List<User> users ;
-
+    private DataBase<User> userData =new  DataBase();
     public UserService() {
-        List<User> list = (List<User>) DataBase.readFromFile(DataBase.USER_PATH);
+        List<User> list= userData.readFromFile(DataBase.USER_PATH);
         if(list ==null){
             list=new ArrayList<>();
         }
@@ -33,13 +33,13 @@ public class UserService implements IGenericService<User,Integer> {
             users.set(users.indexOf(findById(user.getId())),user);
         }
         // luu vao file
-        DataBase.writeToFile(users,DataBase.USER_PATH);
+        userData.writeToFile(users,DataBase.USER_PATH);
     }
 
     @Override
     public void delete(Integer id) {
         users.remove(findById(id));
-        DataBase.writeToFile(users,DataBase.USER_PATH);
+        userData.writeToFile(users,DataBase.USER_PATH);
     }
 
     @Override
@@ -68,4 +68,15 @@ public class UserService implements IGenericService<User,Integer> {
         }
         return null;
     }
+    public int getNewId(){
+        int max = 0;
+        for (User u: users
+             ) {
+            if(u.getId() > max){
+                max= u.getId();
+            }
+        }
+        return max+1;
+    }
+
 }

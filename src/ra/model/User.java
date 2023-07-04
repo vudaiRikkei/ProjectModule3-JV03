@@ -1,16 +1,18 @@
 package ra.model;
 
+import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
-public class User {
+public class User implements Serializable {
     private int id;
     private String name;
     private String username;
     private String password;
     private String address;
     private  String phoneNumber;
-    private boolean status;
-    private Set<RoleName> roles;
+    private boolean status = true;
+    private Set<RoleName> roles = new HashSet<>();
 
     public User() {
     }
@@ -88,5 +90,18 @@ public class User {
 
     public void setRoles(Set<RoleName> roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        String role ;
+        if(roles.contains(RoleName.ADMIN)){
+            role= "ADMIN";
+        }else if(roles.contains(RoleName.MANAGER)){
+            role = "MANAGER";
+        }else {
+            role = "USER";
+        }
+        return "ID : "+id + " | Name : "+name + "| Username : "+username + " | Role : "+role + "| Status : "+(status?"UnLock":"Lock") ;
     }
 }

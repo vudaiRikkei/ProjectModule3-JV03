@@ -36,4 +36,7 @@ public class UserController {
     public User login(String username, String password){
         return userService.login(username,password);
     }
+    public int getNewId(){
+        return userService.getNewId();
+    }
 }
