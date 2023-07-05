@@ -6,6 +6,7 @@ import java.util.List;
 
 public class DataBase<T> {
     public static final String USER_PATH ="C:\\Users\\hung1\\OneDrive\\Desktop\\Project_MD3\\src\\ra\\util\\users.txt";
+    public static final String PRODUCT_PATH ="C:\\Users\\hung1\\OneDrive\\Desktop\\Project_MD3\\src\\ra\\util\\products.txt";
     public  void writeToFile(List<T> o, String path){
         FileOutputStream fos = null;
         ObjectOutputStream oos = null;

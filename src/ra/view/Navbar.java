@@ -1,9 +1,11 @@
 package ra.view;
 
 import ra.config.InputMethods;
+import ra.controller.ProductController;
 import ra.controller.UserController;
 import ra.model.RoleName;
 import ra.model.User;
+import ra.service.CartService;
 
 
 import java.util.Arrays;
@@ -12,6 +14,8 @@ import java.util.List;
 
 public class Navbar {
     private static UserController userController = new UserController();
+    private static ProductController productController = new ProductController();
+
     public static User userLogin;
     // tat ca menu dao dien dieu huong
 
@@ -47,18 +51,26 @@ public class Navbar {
     public static void menuUser() {
         while (true) {
             System.out.println("-------------Menu-User-------------");
+            System.out.println("1. Show list Product");
+            System.out.println("2. Add to cart");
+            System.out.println("3. View Cart");
+            System.out.println("4. Change Profile");
+            System.out.println("5. Change Password");
             System.out.println("0. Log Out");
             System.out.println("Enter your choice");
             int choice = InputMethods.getInteger();
             switch (choice) {
                 case 1:
-
+                    // hiển thị danh sách sanr phẩm
+                    ProductManger.displayListProduct(productController.findAll());
                     break;
                 case 2:
-
+                    // mua hàng
+                    CartManager.addToCart();
                     break;
                 case 3:
-
+                    // quan li gió hàng
+                    new CartManager();
                     break;
                 case 0:
                     logOut();
@@ -112,6 +124,14 @@ public class Navbar {
         System.out.println("1. Show All Acount");
         System.out.println("2. Block/Unblock Acount");
         System.out.println("3. Back");
+    }
+    public  static void menuCart(){
+        System.out.println("-------------Menu-Cart-------------");
+        System.out.println("1. Show Cart");
+        System.out.println("2. Change quantity");
+        System.out.println("3. Delete item");
+        System.out.println("4. Delete all");
+        System.out.println("5. Back");
     }
 
     public static void login() {

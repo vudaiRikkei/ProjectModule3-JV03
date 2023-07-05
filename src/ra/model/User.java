@@ -1,7 +1,9 @@
 package ra.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class User implements Serializable {
@@ -13,6 +15,7 @@ public class User implements Serializable {
     private  String phoneNumber;
     private boolean status = true;
     private Set<RoleName> roles = new HashSet<>();
+    private List<CartItem> cart = new ArrayList<>();
 
     public User() {
     }
@@ -88,8 +91,17 @@ public class User implements Serializable {
         return roles;
     }
 
+
     public void setRoles(Set<RoleName> roles) {
         this.roles = roles;
+    }
+
+    public List<CartItem> getCart() {
+        return cart;
+    }
+
+    public void setCart(List<CartItem> cart) {
+        this.cart = cart;
     }
 
     @Override

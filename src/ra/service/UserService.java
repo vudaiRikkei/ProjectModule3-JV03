@@ -31,6 +31,7 @@ public class UserService implements IGenericService<User,Integer> {
         }else {
             // update
             users.set(users.indexOf(findById(user.getId())),user);
+
         }
         // luu vao file
         userData.writeToFile(users,DataBase.USER_PATH);
