@@ -18,4 +18,7 @@ public class ProductController {
     public Product findById(int id){
         return productService.findById(id);
     }
+    public  void save (Product p){
+        productService.save(p);
+    }
 }

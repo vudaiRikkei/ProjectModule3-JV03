@@ -25,7 +25,8 @@ public class ProductService implements IGenericService<Product,Integer> {
 
     @Override
     public void save(Product product) {
-
+        products.set(products.indexOf(findById(product.getId())),product);
+        productData.writeToFile(products,DataBase.PRODUCT_PATH);
     }
 
     @Override

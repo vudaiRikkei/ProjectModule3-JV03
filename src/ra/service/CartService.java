@@ -48,6 +48,7 @@ public class CartService implements IGenericService<CartItem,Integer> {
 
     @Override
     public void delete(Integer id) {
+        System.out.println(userLogin.getName());
         userLogin.getCart().remove(findById(id));
         userService.save(userLogin);
     }

@@ -56,13 +56,14 @@ public class Navbar {
             System.out.println("3. View Cart");
             System.out.println("4. Change Profile");
             System.out.println("5. Change Password");
+            System.out.println("6. Order history");
             System.out.println("0. Log Out");
             System.out.println("Enter your choice");
             int choice = InputMethods.getInteger();
             switch (choice) {
                 case 1:
                     // hiển thị danh sách sanr phẩm
-                    ProductManger.displayListProduct(productController.findAll());
+                    ProductManger.displayListProduct();
                     break;
                 case 2:
                     // mua hàng
@@ -71,6 +72,10 @@ public class Navbar {
                 case 3:
                     // quan li gió hàng
                     new CartManager();
+                    break;
+                case 6:
+                    // lịch sử mua hàng
+                    new OrderManager();
                     break;
                 case 0:
                     logOut();
@@ -131,7 +136,8 @@ public class Navbar {
         System.out.println("2. Change quantity");
         System.out.println("3. Delete item");
         System.out.println("4. Delete all");
-        System.out.println("5. Back");
+        System.out.println("5. Check out");
+        System.out.println("6. Back");
     }
 
     public static void login() {
@@ -200,8 +206,6 @@ public class Navbar {
         userController.save(user);
         System.out.println("Đăng kí thành công");
         System.out.println("Vui long đăng nhập");
-        login();
-
     }
 
     public static void logOut() {

@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DataBase<T> {
-    public static final String USER_PATH ="C:\\Users\\hung1\\OneDrive\\Desktop\\Project_MD3\\src\\ra\\util\\users.txt";
-    public static final String PRODUCT_PATH ="C:\\Users\\hung1\\OneDrive\\Desktop\\Project_MD3\\src\\ra\\util\\products.txt";
+    public static final String USER_PATH ="E:\\Rikkei Academi\\code\\MD3\\jv03_23\\PROJECT\\ProjectMd3-JV03\\src\\ra\\util\\users.txt";
+    public static final String PRODUCT_PATH ="E:\\Rikkei Academi\\code\\MD3\\jv03_23\\PROJECT\\ProjectMd3-JV03\\src\\ra\\util\\products.txt";
+    public static final String ORDER_PATH ="E:\\Rikkei Academi\\code\\MD3\\jv03_23\\PROJECT\\ProjectMd3-JV03\\src\\ra\\util\\order.txt";
     public  void writeToFile(List<T> o, String path){
         FileOutputStream fos = null;
         ObjectOutputStream oos = null;

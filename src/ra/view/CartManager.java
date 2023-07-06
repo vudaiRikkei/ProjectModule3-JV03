@@ -3,15 +3,19 @@ package ra.view;
 import ra.config.Constants;
 import ra.config.InputMethods;
 import ra.controller.CartController;
+import ra.controller.OrderController;
 import ra.controller.ProductController;
 import ra.model.CartItem;
+import ra.model.Order;
 import ra.model.Product;
 import ra.model.User;
 
 public class CartManager {
-    private static CartController cartController = new CartController(Navbar.userLogin);
-
+    private static CartController cartController ;
+    private ProductController productController;
     public CartManager() {
+        productController = new ProductController();
+        cartController= new CartController(Navbar.userLogin);
         while (true) {
             Navbar.menuCart();
             int choice = InputMethods.getInteger();
@@ -32,7 +36,11 @@ public class CartManager {
                     // xóa hêt
                     cartController.clearAll();
                     break;
-                case 5:
+                    case 5:
+                   // tạo hóa đơn
+                    checkout(productController);
+                    break;
+                case 6:
                     Navbar.menuUser();
                     break;
                 default:
@@ -49,6 +57,7 @@ public class CartManager {
         }
         for (CartItem ci:userLogin.getCart()
              ) {
+            ci.setProduct(productController.findById(ci.getProduct().getId()));
             System.out.println(ci);
         }
     }
@@ -74,8 +83,52 @@ public class CartManager {
         }
         cartController.delete(cartItemID);
     }
+    public void checkout(ProductController productController){
+        OrderController orderController = new OrderController();
+        User userLogin = Navbar.userLogin;
+        if(userLogin.getCart().isEmpty()){
+            System.err.println("Cart is Empty");
+            return;
+        }
+        //  kiểm tra số lượng trong kho
+        for (CartItem ci: userLogin.getCart()) {
+            Product p = productController.findById(ci.getProduct().getId());
+            if(ci.getQuantity() >p.getStock() ){
+                System.err.println("Sản phẩm "+p.getName() + " chỉ còn "+ p.getStock() +" sản phẩm, vui lòng giảm số lượng");
+                return;
+            }
+        }
+
+        Order newOrder = new Order();
+        newOrder.setId(orderController.getNewId());
+        // coppy sp trong gior hàng sang hóa đơn
+        newOrder.setOrderDetail(userLogin.getCart());
+        // cập nhật tổng tiền
+        double total = 0;
+        for (CartItem ci: userLogin.getCart()) {
+            total+= ci.getQuantity()*ci.getProduct().getPrice();
+        }
+        newOrder.setTotal(total);
+
+        newOrder.setUserId(userLogin.getId());
+        System.out.println("Enter Name");
+        newOrder.setReceiver(InputMethods.getString());
+        System.out.println("Ennter Phone number");
+        newOrder.setPhoneNumber(InputMethods.getString());
+        System.out.println("Enter address");
+        newOrder.setAddress(InputMethods.getString());
+        orderController.save(newOrder);
+        // giảm số lượng đi
+        for (CartItem ci: userLogin.getCart()) {
+            Product p = productController.findById(ci.getProduct().getId());
+           p.setStock(p.getStock()-ci.getQuantity());
+           productController.save(p);
+        }
+        cartController.clearAll();
+    }
 
     public static void addToCart() {
+        cartController = new CartController(Navbar.userLogin);
         ProductController productController = new ProductController();
         System.out.println("Enter Product id");
         int proId = InputMethods.getInteger();
